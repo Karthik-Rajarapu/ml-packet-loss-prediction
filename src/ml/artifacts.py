@@ -22,6 +22,15 @@ class ModelMetadata:
     target_column: str
     training_config: dict[str, Any] = field(default_factory=dict)
     metrics: dict[str, float] = field(default_factory=dict)
+    # Added in Phase 6 (inference engine) per docs/PHASE_6_INFERENCE_ENGINE.md
+    # Section 15 -- both are genuinely recorded at save time, never invented:
+    is_test_fixture: bool = False
+    training_timestamp: str | None = None
+    # NOT populated: this project has no model-versioning or dataset-identity
+    # scheme yet (no model_version / training_dataset_id / feature_schema_version
+    # field is added for either, to avoid a field that always reads None and
+    # implies tracking that doesn't exist -- see PHASE_6 docs Section 15 for
+    # what's missing and why it isn't faked here).
 
 
 def save_model(pipeline: Pipeline, path: Path) -> Path:

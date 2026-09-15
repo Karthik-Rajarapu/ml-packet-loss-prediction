@@ -59,4 +59,7 @@ def test_saved_metadata_contains_no_unexpected_keys(tmp_path):
     path = save_metadata(metadata, tmp_path / "meta.json")
     import json
     raw = json.loads(path.read_text())
-    assert set(raw.keys()) == {"model_name", "feature_columns", "target_column", "training_config", "metrics"}
+    assert set(raw.keys()) == {
+        "model_name", "feature_columns", "target_column", "training_config", "metrics",
+        "is_test_fixture", "training_timestamp",
+    }

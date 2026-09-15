@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -123,6 +124,8 @@ def main() -> int:
             model_name=best_name,
             feature_columns=FEATURE_COLUMNS,
             target_column=TARGET_COLUMN,
+            is_test_fixture=False,
+            training_timestamp=datetime.now(timezone.utc).isoformat(),
             training_config={
                 "split_method": args.split_method,
                 "test_fraction": args.test_fraction,

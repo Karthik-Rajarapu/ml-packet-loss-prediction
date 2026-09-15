@@ -1,0 +1,12 @@
+{
+  "bottleneck_bw_mbps_values": [2.0, 5.0],
+  "bottleneck_delay_ms_values": [0.0, 20.0],
+  "offered_load_factors": [0.5, 1.0, 1.5],
+  "n_flows_values": [1],
+  "traffic_type": "udp",
+  "bottleneck_queue_pkts": 20,
+  "sample_interval_s": 2.0,
+  "duration_s": 20.0,
+  "target_horizon_intervals": 1,
+  "repetitions": 1
+}
