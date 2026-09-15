@@ -1,0 +1,27 @@
+{
+  "start": {
+    "connected": [{"socket": 4, "local_host": "10.0.0.1", "local_port": 5001, "remote_host": "10.0.0.3", "remote_port": 5201}],
+    "test_start": {"protocol": "UDP", "num_streams": 1, "blksize": 1470, "omit": 0, "duration": 6, "bytes": 0, "blocks": 0}
+  },
+  "intervals": [
+    {
+      "streams": [{"socket": 4, "start": 0.0, "end": 2.000105, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0}],
+      "sum": {"start": 0.0, "end": 2.000105, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0,
+              "jitter_ms": 0.523, "lost_packets": 5, "packets": 720, "lost_percent": 0.694444}
+    },
+    {
+      "streams": [{"socket": 4, "start": 2.000105, "end": 4.000210, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0}],
+      "sum": {"start": 2.000105, "end": 4.000210, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0,
+              "jitter_ms": 0.891, "lost_packets": 48, "packets": 733, "lost_percent": 6.549795}
+    },
+    {
+      "streams": [{"socket": 4, "start": 4.000210, "end": 6.000315, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0}],
+      "sum": {"start": 4.000210, "end": 6.000315, "seconds": 2.000105, "bytes": 1000000, "bits_per_second": 4000000.0,
+              "jitter_ms": 1.204, "lost_packets": 102, "packets": 741, "lost_percent": 13.76518}
+    }
+  ],
+  "end": {
+    "sum": {"start": 0, "end": 6.000315, "seconds": 6.000315, "bytes": 3000000, "bits_per_second": 4000000.0,
+            "jitter_ms": 1.204, "lost_packets": 155, "packets": 2194, "lost_percent": 7.06473}
+  }
+}

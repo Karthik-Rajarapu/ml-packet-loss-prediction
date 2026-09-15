@@ -1,0 +1,15 @@
+# Dev/test dependencies for the parts of this project that run outside
+# Mininet (parsers, schema, target construction, CLI scripts).
+#
+# Mininet itself is NOT installed via pip -- it is a system package
+# installed inside WSL2 Ubuntu with `sudo apt install mininet`
+# (see docs/ENVIRONMENT_SETUP.md). Installing it via pip is not the
+# supported path and is deliberately not listed here.
+pytest>=7.4
+
+# Phase 4: ML modeling pipeline (src/ml/, scripts/train_models.py)
+pandas>=2.0
+numpy>=1.26
+scikit-learn>=1.4
+matplotlib>=3.8
+joblib>=1.3

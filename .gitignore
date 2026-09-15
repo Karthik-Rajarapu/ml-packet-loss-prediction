@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw experiment output -- generated data, not source
+data/raw/*.csv
+data/manifests/*.json
+
+# Trained model artifacts and evaluation reports -- generated output, not source
+models/*.joblib
+models/*.json
+reports/modeling/*.png
+reports/modeling/*.csv
