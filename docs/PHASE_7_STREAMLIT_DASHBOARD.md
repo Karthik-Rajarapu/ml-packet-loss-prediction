@@ -1,6 +1,8 @@
 # PHASE_7_STREAMLIT_DASHBOARD.md
 ## Streamlit Prediction Dashboard
 
+> **SUPERSEDED by `docs/PHASE_9_PRODUCT_REDESIGN.md`.** The single-page developer-console UI described below was redesigned in Phase 9 into a multi-page product workflow (Home → Upload Data → Prepare Dataset → Train Model → Predict → History). The manual-entry form and every piece of underlying inference/risk logic described here are unchanged and still exist (relocated to Predict → "Manual Prediction") — this document is kept for history, not as the current UI description.
+
 **Production predictions are unavailable until Phase 5 generates a real network dataset and a production model is trained.** Everything demonstrated in this phase uses an explicitly labeled TEST FIXTURE model trained on synthetic data, or the naive persistence baseline. This document describes a working, tested dashboard *shell*, not empirical prediction results.
 
 ---

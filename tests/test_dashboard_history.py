@@ -1,3 +1,5 @@
+import pytest
+
 from dashboard.history import PredictionHistory, PredictionHistoryEntry
 
 
@@ -28,13 +30,43 @@ def test_add_increases_length_and_appears_in_dataframe():
     assert df.iloc[0]["risk_level"] == "HIGH"
 
 
-def test_dataframe_never_contains_an_actual_loss_column():
-    """Strict rule: never fabricate an 'actual' packet-loss value -- the
-    history table must not have a column implying one exists."""
+def test_actual_loss_column_exists_but_starts_unset():
+    """Superseded by the Phase 9 'record actual outcome' feature: the
+    column now exists (so a real, user-reported outcome can be attached
+    later), but the strict no-fabrication rule still holds -- it must
+    never be auto-populated. Only an explicit record_actual() call may
+    set it (see the next tests)."""
     history = PredictionHistory()
     history.add(_entry())
     df = history.to_dataframe()
-    assert not any("actual" in c.lower() for c in df.columns)
+    assert "actual_packet_loss_pct" in df.columns
+    assert df.iloc[0]["actual_packet_loss_pct"] is None
+    assert df.iloc[0]["absolute_error"] is None
+
+
+def test_record_actual_sets_value_and_absolute_error():
+    history = PredictionHistory()
+    history.add(_entry(loss=6.0))
+    history.record_actual(0, actual_packet_loss_pct=5.0)
+    df = history.to_dataframe()
+    assert df.iloc[0]["actual_packet_loss_pct"] == 5.0
+    assert df.iloc[0]["absolute_error"] == pytest.approx(1.0)
+
+
+def test_record_actual_invalid_index_raises():
+    history = PredictionHistory()
+    with pytest.raises(IndexError):
+        history.record_actual(0, actual_packet_loss_pct=1.0)
+
+
+def test_entries_with_actuals_only_includes_recorded_rows():
+    history = PredictionHistory()
+    history.add(_entry(loss=1.0))
+    history.add(_entry(loss=2.0))
+    history.record_actual(1, actual_packet_loss_pct=2.5)
+    subset = history.entries_with_actuals()
+    assert len(subset) == 1
+    assert subset.iloc[0]["predicted_packet_loss_pct"] == 2.0
 
 
 def test_clear_empties_the_history():

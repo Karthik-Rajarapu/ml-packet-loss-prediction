@@ -57,11 +57,11 @@ Point out the second command's banner: **"TEST FIXTURE DEMONSTRATION — NOT REA
 ```bash
 streamlit run app.py
 ```
-Open the browser to `http://localhost:8501`. Point out the **System Status** panel: Mode = DEMONSTRATION (automatic, since no production model exists), Model status = NOT AVAILABLE / TEST FIXTURE.
+Open the browser to `http://localhost:8501`. You land on **Home** — three workflow cards (Upload, Train & Validate, Predict) and a "Get Started" button. Click it to go to **Upload Data**.
 
-## 9. Demonstrate Test-Fixture Mode
+## 9. Demonstrate the Workflow (Test-Fixture Mode)
 
-Fill in the current-network-conditions form (defaults are pre-filled with clearly synthetic example values) and click **PREDICT NEXT INTERVAL**. Show: the CURRENT OBSERVATION vs. PREDICTED NEXT INTERVAL split, the risk badge, and the demonstration-mode warning banner directly above the result. Add a second prediction and show the session history table.
+Walk the sidebar in order: **Upload Data** (upload a small CSV — even one with everyday column names like `rtt`/`loss`/`throughput`; point out the column-mapping section auto-detecting them, with low-confidence guesses flagged for confirmation, never silently accepted) → **Prepare Dataset** (click "Prepare Dataset," show the green checklist and the real, computed zero-loss/non-zero-loss split) → **Train Model** (click "Train Models," show the real MAE/RMSE/R² comparison table and which model was recommended and why) → **Predict**, either the "Manual Prediction" tab (defaults are pre-filled with clearly synthetic example values) or "Batch Prediction" with a small CSV. Show the CURRENT OBSERVATION vs. PREDICTED NEXT INTERVAL split, the risk badge, and — since no production model exists on this machine — the demonstration-mode warning banner directly above the result. Finish on **History** to show the session table, and optionally record a made-up "actual outcome" to show the actual-vs-predicted chart appearing.
 
 ## 10. State Plainly That This Is Not Empirical
 

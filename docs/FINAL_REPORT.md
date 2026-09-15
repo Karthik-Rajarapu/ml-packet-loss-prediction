@@ -9,7 +9,7 @@
 
 ## 2. Abstract
 
-This project investigates whether machine learning can predict next-interval packet loss in a computer network from currently observable network conditions. A Mininet-based dumbbell-topology experiment framework, a leakage-safe dataset generation pipeline, a regression-based ML modeling pipeline (naive baseline, Linear Regression, Decision Tree, Random Forest, Gradient Boosting), a production-ready inference engine, and a Streamlit demonstration dashboard were designed, implemented, and thoroughly tested (223 automated tests passing). However, the WSL2/Mininet environment required to execute real network experiments was not available on the development machine throughout the project, so **no real network dataset, production-trained model, or empirical prediction-accuracy result exists**. This report documents a complete, tested, ready-to-run software system and is explicit, throughout, about the boundary between what was engineered and tested versus what remains empirically unvalidated.
+This project investigates whether machine learning can predict next-interval packet loss in a computer network from currently observable network conditions. A Mininet-based dumbbell-topology experiment framework, a leakage-safe dataset generation pipeline, a regression-based ML modeling pipeline (naive baseline, Linear Regression, Decision Tree, Random Forest, Gradient Boosting), a production-ready inference engine, and a Streamlit demonstration dashboard were designed, implemented, and thoroughly tested (280 automated tests passing). However, the WSL2/Mininet environment required to execute real network experiments was not available on the development machine throughout the project, so **no real network dataset, production-trained model, or empirical prediction-accuracy result exists**. This report documents a complete, tested, ready-to-run software system and is explicit, throughout, about the boundary between what was engineered and tested versus what remains empirically unvalidated.
 
 ## 3. Introduction
 
@@ -92,7 +92,7 @@ Python 3, `pandas`/`numpy`/`scikit-learn` for the ML pipeline, `matplotlib` for 
 
 ## 20. Testing
 
-**223 automated tests passing, 2 skipped** (the live-Mininet integration tests, correctly skipped rather than faked, since the environment is unavailable). Coverage includes unit tests for every module, leakage-specific adversarial tests (deliberately-corrupted fixtures designed to slip past a weaker check), a full end-to-end integration test chaining dataset → training → artifact → inference → risk → dashboard contract, a system health check, and an inference-latency benchmark. Full test-suite results and command: `docs/RESULTS.md` Section A.
+**280 automated tests passing, 2 skipped** (the live-Mininet integration tests, correctly skipped rather than faked, since the environment is unavailable). Coverage includes unit tests for every module, leakage-specific adversarial tests (deliberately-corrupted fixtures designed to slip past a weaker check), a full end-to-end integration test chaining dataset → training → artifact → inference → risk → dashboard contract, a system health check, and an inference-latency benchmark. Full test-suite results and command: `docs/RESULTS.md` Section A.
 
 ## 21. Results
 
@@ -117,7 +117,7 @@ See `docs/RESULTS.md` for the complete, two-part breakdown. In summary: every en
 
 ## 24. Conclusion
 
-This project delivers a complete, tested, leakage-safe software system for network-conditions-to-packet-loss regression prediction, spanning experiment design, data generation, ML training/evaluation, inference, risk classification, and a demonstration dashboard — 223 passing automated tests attest to its internal correctness. It does **not** deliver, and does not claim to deliver, empirical evidence that the approach predicts real network packet loss accurately, because the real-network data required for that claim could not be collected in the available environment. The engineering is complete; the empirical validation is the well-defined, explicitly-scoped next step.
+This project delivers a complete, tested, leakage-safe software system for network-conditions-to-packet-loss regression prediction, spanning experiment design, data generation, ML training/evaluation, inference, risk classification, and a demonstration dashboard — 280 passing automated tests attest to its internal correctness. It does **not** deliver, and does not claim to deliver, empirical evidence that the approach predicts real network packet loss accurately, because the real-network data required for that claim could not be collected in the available environment. The engineering is complete; the empirical validation is the well-defined, explicitly-scoped next step.
 
 ## 25. References
 

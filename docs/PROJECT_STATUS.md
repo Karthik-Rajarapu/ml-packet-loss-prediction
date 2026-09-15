@@ -18,13 +18,13 @@ All of the following are code-complete and covered by automated tests (223 passi
 - **Model artifacts** — joblib + metadata persistence, production/test-fixture distinction (`src/ml/artifacts.py`)
 - **Inference engine** — strict feature-contract validation, structural production/fixture separation, naive-baseline path (`src/ml/inference.py`)
 - **Risk classification** — LOW/MODERATE/HIGH from predicted loss, fixed documented thresholds (`src/ml/risk.py`)
-- **Streamlit dashboard** — production/demonstration mode toggle, no silent fallback, bounded in-session history (`app.py`, `src/dashboard/`)
-- **Integration tests** — a full end-to-end fixture pipeline test (dataset → training → artifact → inference → risk → dashboard contract)
+- **Streamlit dashboard** — a 6-page product workflow (Home → Upload Data → Prepare Dataset → Train Model → Predict → History), CSV upload with alias-based column mapping, in-app training against the existing model pipeline, explicit (never automatic) production-model promotion with archiving, production/demonstration mode toggle, no silent fallback, bounded in-session history with optional user-recorded actual-outcome comparison (`app.py`, `src/dashboard/`, `src/ml/{dataset_upload,column_mapping,dataset_adapter,training_orchestration}.py` — see `docs/PHASE_9_PRODUCT_REDESIGN.md`)
+- **Integration tests** — a full end-to-end fixture pipeline test (dataset → training → artifact → inference → risk → dashboard contract), plus a full dashboard-workflow integration test (upload → mapping → prepare → train → predict → history)
 - **System checks** — `scripts/system_check.py` (software health check, separates REQUIRED from REQUIRED-FOR-LIVE-EXPERIMENTS), `scripts/smoke_test.py` (environment probe), `scripts/benchmark_inference.py` (software latency benchmark)
 
 ## EMPIRICALLY VALIDATED
 
-**Nothing in this section, because no real network data has been collected.** Listed explicitly, rather than omitted, so the gap is unambiguous:
+**Nothing in this section, because no real network data has been collected.** Listed explicitly, rather than omitted, so the gap is unambiguous. (Phase 9 added the *capability* to train a real, non-fixture production model by uploading a dataset through the dashboard itself — but capability is not validation: nobody has uploaded real Mininet-generated data through it, `models/` still contains only `.gitkeep`, and every verification of this new workflow used an explicitly labeled TEST FIXTURE CSV.)
 
 - Real dataset generation: **NOT VALIDATED**
 - Production model training: **NOT VALIDATED**
@@ -44,7 +44,7 @@ All of the following are code-complete and covered by automated tests (223 passi
 ## Test Summary
 
 ```
-223 / 223 automated tests passing
+280 / 280 automated tests passing
 2 live-Mininet integration tests skipped (environment unavailable, not faked)
 0 failing tests
 ```

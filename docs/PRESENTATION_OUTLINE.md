@@ -39,7 +39,7 @@ Feature contract enforcement, model loading with production/fixture separation, 
 Screenshot (from a real run) showing DEMONSTRATION mode banner and a test-fixture prediction, clearly labeled. Point out the CURRENT OBSERVATION vs. PREDICTED NEXT INTERVAL split.
 
 **Slide 12 — Testing / Engineering Results**
-223/223 automated tests passing, 2 live-Mininet tests correctly skipped. End-to-end fixture integration test. System health check: PASS. Software inference-latency benchmark (median ~12.6ms, test-fixture model, single laptop) — labeled explicitly as a software benchmark, not network performance.
+280/280 automated tests passing, 2 live-Mininet tests correctly skipped. End-to-end fixture integration test. System health check: PASS. Software inference-latency benchmark (median ~12.6ms, test-fixture model, single laptop) — labeled explicitly as a software benchmark, not network performance.
 
 **Slide 13 — Current Limitation**
 One slide, stated plainly, no hedging: "No real Mininet experiments were executed. No production model, no real MAE/RMSE/R², no real predictions exist." Give the reason in one line (WSL2 environment blocker).
@@ -48,7 +48,7 @@ One slide, stated plainly, no hedging: "No real Mininet experiments were execute
 Resolve the environment blocker → run the prepared pilot sweep → train on real data → populate real results. Then: calibrated prediction intervals, live metrics integration.
 
 **Slide 15 — Conclusion**
-A complete, tested, leakage-safe software system for network-conditions-to-packet-loss prediction. Engineering validated (223 tests); empirical validation is the explicit next step, not yet claimed.
+A complete, tested, leakage-safe software system for network-conditions-to-packet-loss prediction. Engineering validated (280 tests); empirical validation is the explicit next step, not yet claimed.
 
 ---
 

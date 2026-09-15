@@ -10,7 +10,7 @@ Everything below was actually executed on this development machine; none of it i
 
 ### A.1 Automated Test Suite
 ```
-223 / 223 tests passed
+280 / 280 tests passed
 2 tests skipped (live-Mininet integration tests -- environment unavailable, see A.3)
 0 tests failed
 ```

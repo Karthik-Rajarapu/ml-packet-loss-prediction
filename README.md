@@ -45,7 +45,7 @@ Full diagram and per-layer interfaces: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.
 - A production-ready inference engine with a strict feature contract and structural production/test-fixture separation
 - A derived LOW/MODERATE/HIGH risk layer with documented, fixed thresholds
 - A Streamlit dashboard that never silently substitutes a test model for a missing production one
-- 223 automated tests
+- 280 automated tests
 
 ## ML Models
 
@@ -66,13 +66,14 @@ A small dumbbell topology — left hosts → shaped bottleneck link → right ho
 ```
 src/
   network/     Mininet topology, experiment runner, data collectors, validation, sweep config
-  ml/          dataset loading, splitting, preprocessing, models, training, evaluation,
-               risk classification, model artifacts, inference engine, test-fixture demo data
+  ml/          dataset loading, upload/column-mapping, splitting, preprocessing, models, training,
+               evaluation, risk classification, model artifacts, inference engine, test-fixture demo data
   dashboard/   Streamlit support: feature inputs, model status, prediction history, report readers
-app.py         Streamlit dashboard entry point
+    pages/     the 6-page product workflow (home, upload, prepare, train, predict, history)
+app.py         Streamlit dashboard entry point (thin navigation shell)
 scripts/       CLI tools: run_experiment, generate_dataset, dataset_report, train_models,
                predict_packet_loss, smoke_test, benchmark_inference, system_check
-tests/         229 automated tests (unit, integration, leakage-specific, end-to-end fixture)
+tests/         280+ automated tests (unit, integration, leakage-specific, end-to-end fixture)
 docs/          phase-by-phase documentation, architecture, methodology, results, report, viva prep
 configs/       reusable sweep configuration files (e.g. the Phase 5 pilot sweep)
 data/raw/      generated experiment CSVs (empty — no real data yet)
@@ -125,7 +126,7 @@ python3 scripts/predict_packet_loss.py --metrics-json my_metrics.json  # product
 ```bash
 streamlit run app.py
 ```
-Starts in DEMONSTRATION mode automatically if no production model is found in `models/` (the current state) — the UI states this plainly rather than pretending otherwise.
+A product-style workflow: **Home → Upload Data → Prepare Dataset → Train Model → Predict → History**. Upload your own CSV, map its columns to the project's feature contract (aliases are auto-detected; ambiguous ones must be confirmed), and the app builds a leakage-safe target, trains the existing 5 models, and lets you explicitly save the best one as the production model. Starts in DEMONSTRATION mode automatically if no production model exists yet (the current state) — the UI states this plainly rather than pretending otherwise. The original single-observation form still exists under Predict → "Manual Prediction." See [docs/PHASE_9_PRODUCT_REDESIGN.md](docs/PHASE_9_PRODUCT_REDESIGN.md) for the full design.
 
 ## Current Status
 
@@ -138,7 +139,7 @@ Starts in DEMONSTRATION mode automatically if no production model is found in `m
 | 5 — Real network data generation | **Blocked** (environment unavailable) |
 | 6 — Inference engine | Code complete, tested |
 | 7 — Streamlit dashboard | Code complete, tested |
-| 8 — Integration, testing, performance | Complete — 223/223 tests passing |
+| 8 — Integration, testing, performance | Complete — 280/280 tests passing |
 
 Full status: [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md). Full results (engineering vs. empirical): [docs/RESULTS.md](docs/RESULTS.md).
 
@@ -155,4 +156,4 @@ Resolve the WSL2/Mininet blocker; run the already-prepared pilot sweep (`configs
 
 ## Documentation Index
 
-[PROJECT_PLAN.md](PROJECT_PLAN.md) · [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/METHODOLOGY.md](docs/METHODOLOGY.md) · [docs/RESULTS.md](docs/RESULTS.md) · [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md) · [docs/PAPER_DRAFT.md](docs/PAPER_DRAFT.md) · [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) · [docs/VIVA_QA.md](docs/VIVA_QA.md) · [docs/PRESENTATION_OUTLINE.md](docs/PRESENTATION_OUTLINE.md) · [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) · phase-by-phase docs in `docs/PHASE_1..8_*.md`.
+[PROJECT_PLAN.md](PROJECT_PLAN.md) · [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/METHODOLOGY.md](docs/METHODOLOGY.md) · [docs/RESULTS.md](docs/RESULTS.md) · [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md) · [docs/PAPER_DRAFT.md](docs/PAPER_DRAFT.md) · [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md) · [docs/VIVA_QA.md](docs/VIVA_QA.md) · [docs/PRESENTATION_OUTLINE.md](docs/PRESENTATION_OUTLINE.md) · [docs/PROJECT_STATUS.md](docs/PROJECT_STATUS.md) · [docs/PHASE_9_PRODUCT_REDESIGN.md](docs/PHASE_9_PRODUCT_REDESIGN.md) (current dashboard design) · phase-by-phase docs in `docs/PHASE_1..8_*.md`.

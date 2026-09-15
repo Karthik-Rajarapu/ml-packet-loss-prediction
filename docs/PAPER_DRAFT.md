@@ -4,7 +4,7 @@
 
 ## Abstract
 
-Packet loss in computer networks is predominantly driven by queueing dynamics under congestion. We investigate whether current network telemetry (RTT, jitter, throughput, utilization, queue occupancy, retransmissions, current loss) can predict next-interval packet loss via supervised regression. We design a Mininet-based dumbbell-topology experiment framework with explicit data-leakage prevention, a group-aware evaluation methodology, and a comparison of a naive temporal baseline against four regression models (Linear Regression, Decision Tree, Random Forest, Gradient Boosting). We implement and thoroughly test the full pipeline, including a production-style inference engine and a demonstration dashboard (223 automated tests passing). Due to an unresolved local WSL2/Mininet environment constraint, real network experiments could not be executed during this work; we report the engineering methodology and test-verified system behavior, and explicitly mark empirical accuracy results as unavailable pending real-data collection.
+Packet loss in computer networks is predominantly driven by queueing dynamics under congestion. We investigate whether current network telemetry (RTT, jitter, throughput, utilization, queue occupancy, retransmissions, current loss) can predict next-interval packet loss via supervised regression. We design a Mininet-based dumbbell-topology experiment framework with explicit data-leakage prevention, a group-aware evaluation methodology, and a comparison of a naive temporal baseline against four regression models (Linear Regression, Decision Tree, Random Forest, Gradient Boosting). We implement and thoroughly test the full pipeline, including a production-style inference engine and a demonstration dashboard (280 automated tests passing). Due to an unresolved local WSL2/Mininet environment constraint, real network experiments could not be executed during this work; we report the engineering methodology and test-verified system behavior, and explicitly mark empirical accuracy results as unavailable pending real-data collection.
 
 **Keywords**: packet loss prediction, network telemetry, regression, Mininet, data leakage, time-series evaluation, congestion.
 
@@ -42,7 +42,7 @@ Group-aware evaluation: either chronological (train on earlier experiments, test
 
 ## 9. Results
 
-**NOT AVAILABLE.** No real Mininet experiment was executed during this work — the required WSL2/Linux environment was not available on the development machine (Windows features `Microsoft-Windows-Subsystem-Linux`/`VirtualMachinePlatform` remained disabled; `mn`/`iperf3`/`tc`/`ovs-vsctl` were never installed). Consequently there is no real dataset, no production-trained model, and no real MAE/RMSE/R² to report. What *was* verified: the complete software pipeline (223 automated tests), a full synthetic-fixture integration test exercising every stage from raw CSV through inference and risk classification, and a software-only inference-latency measurement (median 12.6 ms per prediction, test-fixture model, single laptop) that is explicitly not a network-performance or accuracy claim.
+**NOT AVAILABLE.** No real Mininet experiment was executed during this work — the required WSL2/Linux environment was not available on the development machine (Windows features `Microsoft-Windows-Subsystem-Linux`/`VirtualMachinePlatform` remained disabled; `mn`/`iperf3`/`tc`/`ovs-vsctl` were never installed). Consequently there is no real dataset, no production-trained model, and no real MAE/RMSE/R² to report. What *was* verified: the complete software pipeline (280 automated tests), a full synthetic-fixture integration test exercising every stage from raw CSV through inference and risk classification, and a software-only inference-latency measurement (median 12.6 ms per prediction, test-fixture model, single laptop) that is explicitly not a network-performance or accuracy claim.
 
 ## 10. Limitations
 
@@ -54,7 +54,7 @@ Resolve the environment blocker; execute the already-prepared pilot sweep (`conf
 
 ## 12. Conclusion
 
-We present a complete, tested, leakage-safe methodology and implementation for next-interval packet-loss regression, validated at the software-engineering level (223 passing tests, a full end-to-end fixture integration test, and a working inference/dashboard system) but not yet at the empirical level, pending resolution of a local network-experiment environment constraint. The system is designed to produce real results with zero code changes once real data is available.
+We present a complete, tested, leakage-safe methodology and implementation for next-interval packet-loss regression, validated at the software-engineering level (280 passing tests, a full end-to-end fixture integration test, and a working inference/dashboard system) but not yet at the empirical level, pending resolution of a local network-experiment environment constraint. The system is designed to produce real results with zero code changes once real data is available.
 
 ## References
 

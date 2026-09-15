@@ -5,18 +5,19 @@ inside st.session_state so it survives Streamlit reruns within a browser
 session, but nothing here imports Streamlit or touches disk (Phase 7
 Step 8: "Do not persist fake historical data to disk").
 
-Each entry deliberately has NO "actual packet loss" field: a next-interval
-prediction's true outcome is, by definition, not known at prediction
-time in this manual-input dashboard (there is no live feed replaying
-ground truth yet -- that is Phase 8 territory, see
-docs/PHASE_7_STREAMLIT_DASHBOARD.md Section 8). Inventing an "actual"
-column here would mean fabricating a network measurement, which Strict
-Rule #1 forbids outright.
+`actual_packet_loss_pct` is optional and defaults to None: a
+next-interval prediction's true outcome is not known at prediction time
+in this manual/batch-upload dashboard -- there is no live feed replaying
+ground truth. It can ONLY ever be set afterward by an explicit user
+action (record_actual(), Phase 9 Step 13's "if actual future packet loss
+becomes available") -- the software never fills it in on its own.
+Inventing a value here would mean fabricating a network measurement,
+which Strict Rule #1 forbids outright.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any
 
 import pandas as pd
@@ -31,6 +32,7 @@ class PredictionHistoryEntry:
     predicted_packet_loss_pct: float
     risk_level: str
     input_features: dict[str, Any]
+    actual_packet_loss_pct: float | None = None  # user-supplied only, see module docstring
 
 
 class PredictionHistory:
@@ -58,17 +60,41 @@ class PredictionHistory:
     def entries(self) -> list[PredictionHistoryEntry]:
         return list(self._entries)
 
+    def record_actual(self, index: int, actual_packet_loss_pct: float) -> None:
+        """Attach a user-reported actual outcome to entry `index` (as
+        returned by `entries`/`to_dataframe` row order). The ONLY way an
+        `actual_packet_loss_pct` value is ever set -- always an explicit
+        call with a caller-supplied number, never inferred or guessed."""
+        if not (0 <= index < len(self._entries)):
+            raise IndexError(f"No history entry at index {index}")
+        self._entries[index] = replace(self._entries[index], actual_packet_loss_pct=float(actual_packet_loss_pct))
+
     def to_dataframe(self) -> pd.DataFrame:
         columns = ["timestamp", "model_name", "model_kind", "is_test_fixture",
-                   "predicted_packet_loss_pct", "risk_level"]
+                   "predicted_packet_loss_pct", "risk_level", "actual_packet_loss_pct", "absolute_error"]
         if not self._entries:
             return pd.DataFrame(columns=columns)
-        rows = [{
-            "timestamp": e.timestamp,
-            "model_name": e.model_name,
-            "model_kind": e.model_kind,
-            "is_test_fixture": e.is_test_fixture,
-            "predicted_packet_loss_pct": e.predicted_packet_loss_pct,
-            "risk_level": e.risk_level,
-        } for e in self._entries]
+        rows = []
+        for e in self._entries:
+            abs_error = (
+                abs(e.predicted_packet_loss_pct - e.actual_packet_loss_pct)
+                if e.actual_packet_loss_pct is not None else None
+            )
+            rows.append({
+                "timestamp": e.timestamp,
+                "model_name": e.model_name,
+                "model_kind": e.model_kind,
+                "is_test_fixture": e.is_test_fixture,
+                "predicted_packet_loss_pct": e.predicted_packet_loss_pct,
+                "risk_level": e.risk_level,
+                "actual_packet_loss_pct": e.actual_packet_loss_pct,
+                "absolute_error": abs_error,
+            })
         return pd.DataFrame(rows, columns=columns)
+
+    def entries_with_actuals(self) -> pd.DataFrame:
+        """Subset of history rows that have a user-recorded actual value
+        -- the only rows an actual-vs-predicted chart may ever be built
+        from (Phase 9 Step 13: only when actual values genuinely exist)."""
+        df = self.to_dataframe()
+        return df[df["actual_packet_loss_pct"].notna()].reset_index(drop=True)
